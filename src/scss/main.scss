@@ -17,7 +17,11 @@ body {
 .img-wrapper{
     height: 150px;
 }
-
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .articles{
     display: flex;
     justify-content: center;
@@ -41,9 +45,20 @@ body {
 .search-form{
     display: flex;
     justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.search-input{
+    margin-right: 15px;
 }
 
 .btn{
     display: flex;
     justify-content: center;
+    width: 150px;
+}
+
+.btn.is-hidden{
+    display: none;
 }

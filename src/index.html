@@ -11,12 +11,12 @@
   <body>
     <article class="container">
       <form class="search-form js-search-form row">
-        <input type="text" name="query" />
-        <button type="submit">Искать</button>
+        <input class="search-input" type="text" name="query" />
+        <button class="btn btn-primary button" type="submit">Искать</button>
       </form>
       <ul class="articles js-articles row row-cols-4"></ul>
       <button type="button"
-              class="btn btn-primary button"
+              class="btn btn-primary button is-hidden"
               data-action="load-more"
       >
         Загружаем

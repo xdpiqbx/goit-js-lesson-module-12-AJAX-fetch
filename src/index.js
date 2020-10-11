@@ -1,12 +1,6 @@
-//import './styles.css';
 import './scss/main.scss';
 import tplArticles from "./templates/articles.hbs"
-import fetchArticles from "./js/fetchArticles"
-
-//.then(({articles}) => updateArticlesMarcup(articles))
-
-let searchQuery = "";
-let page = 1;
+import newsService from "./js/news-service.js"
 
 const refs = {
     atrticlesContainer: document.querySelector('.js-articles'),
@@ -18,19 +12,12 @@ refs.searchForm.addEventListener('submit', event => {
     event.preventDefault()
 
     const form = event.currentTarget;
-    //const inputValue = form.elements.query.value
-    searchQuery = form.elements.query.value
+    newsService.query = form.elements.query.value
 
     refs.atrticlesContainer.innerHTML = ""
-
     form.reset();
-    
-    //fetchArticles(inputValue).then(updateArticlesMarcup)
-    page = 1;
-    fetchArticles(searchQuery, page).then(articles => {
-        updateArticlesMarcup(articles);
-        page += 1;
-    })
+
+    fetchArticles();
 })
 
 function updateArticlesMarcup(articles){
@@ -38,12 +25,21 @@ function updateArticlesMarcup(articles){
     refs.atrticlesContainer.insertAdjacentHTML('beforeend', marcupArticles)
 }
 
-refs.loadMoreBtn.addEventListener('click', ()=>{
-    fetchArticles(searchQuery, page).then(articles => {
+refs.loadMoreBtn.addEventListener('click', fetchArticles)
+
+function fetchArticles(){
+    refs.loadMoreBtn.classList.add("is-hidden")
+    
+    newsService.fetchArticles().then(articles => {
+        refs.loadMoreBtn.classList.remove("is-hidden")
         updateArticlesMarcup(articles);
-        page += 1;
+        window.scrollTo({
+            top: document.documentElement.offsetHeight,
+            behavior: 'smooth'
+        });
     })
-})
+}
+
 // const options = {
 //     method: 'GET', // гет - по умолчанию
 //     headers: { // сюда все заголовки моего запроса
